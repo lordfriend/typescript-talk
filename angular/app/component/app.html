@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-horizontal" ng-submit="$ctrl.getMessage()">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">消息类型</label>
+                <div class="col-sm-10">
+                    <label class="radio-inline" ng-repeat="msgTypeItem in $ctrl.msgTypeList">
+                        <input type="radio" ng-model="$ctrl.msgType" ng-value="msgTypeItem.msgType"> {{msgTypeItem.msgDesc}}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <button class="btn btn-primary" type="submit">查询</button>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>消息类型</th>
+                        <th style="min-width: 15em">发送时间</th>
+                        <th>内容</th>
+                        <th style="min-width: 5em">操作</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat=" row in $ctrl.msgList ">
+                    <td>{{row.msgDesc}}</td>
+                    <td>{{row.msgTime}}</td>
+                    <td>{{row.content}}</td>
+                    <td>
+                        <!-- msgStatus: ['全部', '待处理', '已处理', '已过期', '已解决', '无法解决', '已读', '未读'] -->
+                        <a ng-show="row.msgStatus===6 " ng-click="$ctrl.read(row) ">阅读</a>
+                        <a ng-show="row.msgStatus===5 && row.redirectUrl " ng-click="$ctrl.handle(row) ">处理</a>
+                        <span class="ngui-font-attention-color " ng-show="row.msgStatus===5 && !row.redirectUrl ">已读</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
